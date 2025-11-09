@@ -8,10 +8,25 @@ export default function MainUI() {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
 
+  // useEffect(() => {
+  //   const fetchStores = async () => {
+  //     try {
+  //       setStores(["store 1", "store 2"]);
+  //     } catch (err) {
+  //       console.error("Error fetching stores", err);
+  //     }
+  //   };
+  //   fetchStores();
+  // }, []);
+
   useEffect(() => {
     const fetchStores = async () => {
       try {
-        setStores(["store 1", "store 2"]);
+        const res = await fetch("/api/stores");
+        const data = await res.json();
+        setStores(data.stores);
+        console.log(stores);
+        
       } catch (err) {
         console.error("Error fetching stores", err);
       }
@@ -54,12 +69,12 @@ export default function MainUI() {
             <br />
             <div className="card min-w-96 max-w-[900px] bg-base-100 border border-slate-700">
               <div className="card-body">
-                <h2 className="card-title">{store}</h2>
+                <h2 className="card-title">{store.shopName}</h2>
                 <div className="card-actions justify-end space-x-2">
                   <button
                     className="btn btn-outline btn-info w-28"
                     onClick={() =>
-                      router.push(`/chat?store=${store}`)
+                      router.push(`/chat?store=${store.shopName}`)
                     }
                   >
                     Chat
@@ -68,7 +83,7 @@ export default function MainUI() {
                   <button
                     className="btn btn-outline btn-secondary w-28"
                     onClick={() =>
-                      router.push(`/history?store=${store}`)
+                      router.push(`/history?store=${store.shopName}`)
                     }
                   >
                     History
