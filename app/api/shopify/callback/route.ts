@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongoose";
-import Store from "@/lib/models/Store";
+import Store from "@/models/Store";
 import { getCurrentUser } from "@/lib/auth";
 import { encrypt } from "@/lib/encrypt";
 

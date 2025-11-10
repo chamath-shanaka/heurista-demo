@@ -38,7 +38,7 @@
     "lib",
     "models",
     ".next/dev/types/**/*.ts"
-  ],
+, "models"  ],
   "exclude": [
     "node_modules"
   ]

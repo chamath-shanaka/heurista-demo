@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import connectDB from "@/lib/mongoose";
-import User from "@/lib/models/User";
+import User from "@/models/User";
 
 export const authOptions = {
   providers: [
