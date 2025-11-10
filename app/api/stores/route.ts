@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongoose";
 import Store from "@/lib/models/Store";
-// import { getCurrentUser } from "@/lib/auth"; // your Google session helper
+// import { getCurrentUser } from "@/lib/auth";
 
 export async function GET() {
   const user = await { userId: "dummy_user" };
