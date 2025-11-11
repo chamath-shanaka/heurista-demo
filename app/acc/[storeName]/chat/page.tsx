@@ -1,25 +1,16 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 
 export default function ChatPage() {
-  const searchParams = useSearchParams();
-  const storeDomain = searchParams.get("store");
+  const { storeName } = useParams();
+  const decodedStoreName = decodeURIComponent(storeName as string);
 
   const [messages, setMessages] = useState<any[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const bottomRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const fetchMessages = async () => {
-      const res = await fetch(`/api/chat/history?store=${storeDomain}`);
-      const data = await res.json();
-      setMessages(data.messages);
-    };
-    fetchMessages();
-  }, [storeDomain]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -29,14 +20,14 @@ export default function ChatPage() {
     if (!input.trim()) return;
 
     const newMessage = { role: "user", message: input };
-    setMessages((m) => [...m, newMessage]);
+    setMessages([...messages, newMessage]);
     setInput("");
     setIsTyping(true);
 
     const res = await fetch("/api/chat/ask", {
       method: "POST",
       body: JSON.stringify({
-        storeDomain,
+        storeName: decodedStoreName,
         message: newMessage.message,
       }),
     });
@@ -44,7 +35,7 @@ export default function ChatPage() {
     const data = await res.json();
     setIsTyping(false);
 
-    setMessages((m) => [...m, { role: "assistant", message: data.reply }]);
+    setMessages([...messages, newMessage, { role: "assistant", message: data.reply }]);
   };
 
   return (
@@ -53,7 +44,7 @@ export default function ChatPage() {
         ← Back
       </button>
 
-      <h2 className="text-xl font-bold mb-4">{storeDomain}</h2>
+      <h2 className="text-xl font-bold mb-4">{decodedStoreName}</h2>
 
       <div className="h-[70vh] overflow-y-auto space-y-3">
         {messages.map((msg, i) => (
