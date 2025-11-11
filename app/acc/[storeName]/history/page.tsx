@@ -1,20 +1,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 export default function HistoryPage() {
+  const searchParams = useSearchParams();
+  const shopDomain = searchParams.get("shop");
   const { storeName } = useParams();
   const [messages, setMessages] = useState<any[]>([]);
 
   useEffect(() => {
     async function load() {
-      const res = await fetch(`/api/chat/history?store=${storeName}`);
+      const res = await fetch(`/api/chat/history?store=${shopDomain}`);
       const data = await res.json();
       setMessages(data.messages ?? []);
     }
     load();
-  }, [storeName]);
+  }, [shopDomain]);
 
   return (
     <div className="p-6 max-w-3xl mx-auto flex flex-col gap-3">

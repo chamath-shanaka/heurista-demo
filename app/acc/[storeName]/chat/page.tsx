@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 export default function ChatPage() {
   const { storeName } = useParams();
+  const searchParams = useSearchParams();
+
   const decodedStoreName = decodeURIComponent(storeName as string);
+  const shopDomain = searchParams.get("shop");
 
   const [messages, setMessages] = useState<any[]>([]);
   const [input, setInput] = useState("");
@@ -17,7 +20,7 @@ export default function ChatPage() {
   }, [messages, isTyping]);
 
   const sendMessage = async () => {
-    if (!input.trim()) return;
+    if (!input.trim() || !shopDomain) return;
 
     const newMessage = { role: "user", message: input };
     setMessages([...messages, newMessage]);
@@ -27,7 +30,7 @@ export default function ChatPage() {
     const res = await fetch("/api/chat/ask", {
       method: "POST",
       body: JSON.stringify({
-        storeName: decodedStoreName,
+        shopDomain,
         message: newMessage.message,
       }),
     });
