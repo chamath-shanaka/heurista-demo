@@ -74,7 +74,7 @@ export default function MainUI() {
                   <button
                     className="btn btn-outline btn-info w-28"
                     onClick={() =>
-                      router.push(`/chat?store=${store.shopName}`)
+                      router.push(`/acc/${store.shopName}/chat`)
                     }
                   >
                     Chat
@@ -83,7 +83,7 @@ export default function MainUI() {
                   <button
                     className="btn btn-outline btn-secondary w-28"
                     onClick={() =>
-                      router.push(`/history?store=${store.shopName}`)
+                      router.push(`/acc/${store.shopName}/history`)
                     }
                   >
                     History
