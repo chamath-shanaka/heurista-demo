@@ -9,7 +9,8 @@ export async function GET(req: Request) {
   const storeDomain = searchParams.get("store");
 
   const res = await fetch(
-    `${process.env.SUPABASE_URL}/rest/v1/chat_messages?user_id=eq.${user.id}&store_domain=eq.${storeDomain}&order=created_at.asc`,
+    // `${process.env.SUPABASE_URL}/rest/v1/chat_messages?user_id=eq.${user.id}&store_domain=eq.${storeDomain}&order=created_at.asc`,
+    `${process.env.SUPABASE_URL}/rest/v1/chat_messages?user_id=eq.dummy_user&store_domain=eq.shop_url&order=created_at.asc`,
     {
       headers: {
         apikey: process.env.SUPABASE_ANON_PUBLIC_KEY!,
