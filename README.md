@@ -6,31 +6,45 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the signin page.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Open [http://localhost:3000/acc](http://localhost:3000/acc) for user dashboard with shops.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+### .env file structure
+```env
+# Google OAuth and next-auth
+GOOGLE_OAUTH_CLIENT_ID=""
+GOOGLE_OAUTH_CLIENT_SECRET=""
+NEXTAUTH_SECRET=""
+NEXTAUTH_URL=""
 
-To learn more about Next.js, take a look at the following resources:
+# Shopify API App
+SHOPIFY_API_KEY=""
+SHOPIFY_API_SECRET=""
+NEXT_PUBLIC_SHOPIFY_API_KEY=""
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Google Gemini API
+GEMINI_API_KEY=""
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Supabase
+SUPABASE_URL=""
+SUPABASE_ANON_PUBLIC_KEY=""
 
-## Deploy on Vercel
+# MongoDB
+MONGODB_URI=""
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# For encripting tokens
+ENCRYPTION_SECRET=""
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+NEXT_PUBLIC_APP_URL=""
+
+```
+
+
+### Basic flow
+
+`Google OAuth → [recodes user to MongoDB] → Dashboard → Connect Shopify Store → [recodes store data to MongoDB] → Chat → Gemini API → store conversations to Supabase` 
+
