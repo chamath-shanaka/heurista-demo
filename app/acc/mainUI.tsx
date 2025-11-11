@@ -2,22 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 export default function MainUI() {
   const [stores, setStores] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
-
-  // useEffect(() => {
-  //   const fetchStores = async () => {
-  //     try {
-  //       setStores(["store 1", "store 2"]);
-  //     } catch (err) {
-  //       console.error("Error fetching stores", err);
-  //     }
-  //   };
-  //   fetchStores();
-  // }, []);
 
   useEffect(() => {
     const fetchStores = async () => {
@@ -98,7 +88,7 @@ export default function MainUI() {
       {/* Logout Button */}
       <button
         className="btn btn-outline btn-accent fixed bottom-8 right-8"
-        onClick={() => router.push("/logout")}
+        onClick={() => signOut({ callbackUrl: "/" })}
       >
         Log out
       </button>
